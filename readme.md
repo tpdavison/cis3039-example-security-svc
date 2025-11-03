@@ -272,6 +272,40 @@ The `scopes` above are examples and can be changed to match your needs.
 
 Since you are the frontend app and backend api author, you can skip requesting user consent to use the API: In the Auth0 web dashboard: APIs → your API → Settings → Access Settings → “Allow Skipping User Consent”.
 
+To use role based access control with your api it will need enabling in the Auth0 web dashboard: APIs → your API → Settings → RBAC Settings → “Enable RBAC” and “Add Permissions in the Access Token”.
+
+### 4. Give users permission to use the API
+
+A role can include one or more API permissions (scopes).
+
+> You must have enabled RBAC on your API (above) for these steps to work.
+
+Create a role (if you don’t have one):
+
+```bash
+auth0 roles create \
+  --name "ProductReader" \
+  --description "Can read products including prices"
+```
+
+Assign API scopes (permissions) to the role (if you've just created one):
+
+```bash
+auth0 roles permissions add <ROLE_ID> \
+  --api-id <API_ID> \
+  --permissions "read:products"
+```
+
+Again, the permissions above are examples to be tailored for your needs.
+
+Assign the role to a user:
+
+```bash
+auth0 users roles add "<USER_ID>" --roles <ROLE_ID>
+```
+
+Now that user has all permissions associated with the role — and when they log in, Auth0 includes those permissions in their access token if you’ve enabled “Add Permissions in the Access Token” for that API.
+
 ## OAuth2 Access Tokens
 
 > You must have an auth server (see Auth0 setup above).
