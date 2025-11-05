@@ -298,6 +298,18 @@ auth0 roles permissions add <ROLE_ID> \
 
 Again, the permissions above are examples to be tailored for your needs.
 
+Create a test user (if you don't already have one):
+
+```bash
+auth0 users create \
+  --connection-name "Username-Password-Authentication" \
+  --email "testuser1@example.com" \
+  --password "P@ssw0rd!" \
+  --no-input
+```
+
+Note the user id as you'll need it below.
+
 Assign the role to a user:
 
 ```bash
